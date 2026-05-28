@@ -10,9 +10,8 @@ runs:
         proto="${SERVER%%://*}"
         host="${SERVER#*://}"
         git clone "${proto}://oauth2:${{ github.token }}@${host}/${{ github.repository }}" .
-        git checkout ${{ github.sha }}
+        git -c advice.detachedHead=false checkout ${{ github.sha }}
 
     - name: "Copy Task Binary"
       run:  |
-        set -x
         tar -x -C /usr/local/bin -f "${{ github.action_path }}/task_linux_amd64.tar.gz" task
