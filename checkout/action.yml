@@ -1,0 +1,12 @@
+name: "Checkout"
+inputs: {}
+runs:
+  using: "composite"
+  steps:
+    - name: "Checkout"
+      run: |
+        set -x
+        proto="${SERVER%%://*}"
+        host="${SERVER#*://}"
+        git clone "${proto}://oauth2:${{ github.token }}@${host}/${{ github.repository }}" .
+        git checkout ${{ github.sha }}
