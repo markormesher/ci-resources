@@ -11,8 +11,8 @@ echo "Latest version: ${latest_tag}"
 echo "Current version: ${current_tag}"
 
 if [[ "${latest_tag}" != "${current_tag}" ]]; then
-  wget https://github.com/go-task/task/releases/download/${TASK_VERSION}/task_linux_amd64.tar.gz
-  wget https://github.com/go-task/task/releases/download/${TASK_VERSION}/task_checksums.txt
+  wget https://github.com/go-task/task/releases/download/${latest_tag}/task_linux_amd64.tar.gz
+  wget https://github.com/go-task/task/releases/download/${latest_tag}/task_checksums.txt
   sha256sum --check --ignore-missing task_checksums.txt
   mv task_linux_amd64.tar.gz /tedium/repo/setup/.
   echo "${latest_tag}" > /tedium/repo/setup/.task-version
