@@ -4,6 +4,8 @@ runs:
   using: "composite"
   steps:
     - name: "Checkout"
+      env:
+        SERVER: "${{ github.server_url }}"
       run: |
         set -x
         proto="${SERVER%%://*}"
