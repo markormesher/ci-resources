@@ -1,4 +1,4 @@
-name: "Checkout"
+name: "Setup"
 inputs: {}
 runs:
   using: "composite"
@@ -7,8 +7,11 @@ runs:
       env:
         SERVER: "${{ github.server_url }}"
       run: |
-        set -x
         proto="${SERVER%%://*}"
         host="${SERVER#*://}"
         git clone "${proto}://oauth2:${{ github.token }}@${host}/${{ github.repository }}" .
         git checkout ${{ github.sha }}
+
+    - name: "Copy Task Binary"
+      run:  |
+        tar xf -C /usr/local/bin "${{ github.action_path }}/task_linux_amd64.tar.gz" task
