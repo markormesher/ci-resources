@@ -2,7 +2,7 @@
 set -euo pipefail
 
 apt update
-apt install -y --no-install-recommends curl ca-certificates jq
+apt install -y --no-install-recommends curl wget ca-certificates jq
 
 latest_tag=$(curl --fail https://api.github.com/repos/go-task/task/releases/latest | jq -rc '.tag_name')
 current_tag=$(cat /tedium/repo/setup/.task-version)
