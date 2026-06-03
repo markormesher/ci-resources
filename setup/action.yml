@@ -4,14 +4,17 @@ runs:
   using: "composite"
   steps:
     - name: "Checkout"
+      shell: "sh"
       env:
         SERVER: "${{ github.server_url }}"
       run: |
         proto="${SERVER%%://*}"
         host="${SERVER#*://}"
+        git config --global --add safe.directory "$(pwd)"
         git clone "${proto}://oauth2:${{ github.token }}@${host}/${{ github.repository }}" .
         git -c advice.detachedHead=false checkout ${{ github.sha }}
 
     - name: "Copy Task Binary"
+      shell: "sh"
       run:  |
-        tar -x -C /usr/local/bin --no-same-owner -f "${{ github.action_path }}/task_linux_amd64.tar.gz" task
+        tar -x -C /usr/local/bin --no-same-owner -f "${GITHUB_ACTION_PATH}/task_linux_amd64.tar.gz" task
