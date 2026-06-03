@@ -5,17 +5,14 @@ runs:
   steps:
     - name: "Checkout"
       shell: "sh"
-      env:
-        SERVER: "${{ github.server_url }}"
       run: |
-        proto="${SERVER%%://*}"
-        host="${SERVER#*://}"
+        proto="${GITHUB_SERVER_URL%%://*}"
+        host="${GITHUB_SERVER_URL#*://}"
         git config --global --add safe.directory "$(pwd)"
-        git clone "${proto}://oauth2:${{ github.token }}@${host}/${{ github.repository }}" .
-        git -c advice.detachedHead=false checkout ${{ github.sha }}
+        git clone "${proto}://oauth2:${GITHUB_TOKEN}@${host}/${GITHUB_REPOSITORY}" .
+        git -c advice.detachedHead=false checkout ${GITHUB_SHA}
 
     - name: "Copy Task Binary"
       shell: "sh"
       run:  |
-        ls -lR "${GITHUB_ACTION_PATH}"
         tar -x -C /usr/local/bin --no-same-owner -f "${GITHUB_ACTION_PATH}/task_linux_amd64.tar.gz" task
