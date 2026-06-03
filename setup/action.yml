@@ -17,4 +17,5 @@ runs:
     - name: "Copy Task Binary"
       shell: "sh"
       run:  |
+        ls -lR "${{ github.action_path }}"
         tar -x -C /usr/local/bin --no-same-owner -f "${{ github.action_path }}/task_linux_amd64.tar.gz" task
