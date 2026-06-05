@@ -11,6 +11,7 @@ runs:
         proto="${SERVER%%://*}"
         host="${SERVER#*://}"
         git config --global --add safe.directory "$(pwd)"
+        git config --global --add advice.detachedHead "false"
         git clone "${proto}://oauth2:${{ github.token }}@${host}/${{ github.repository }}" .
         git -c advice.detachedHead=false checkout ${{ github.sha }}
 
