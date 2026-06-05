@@ -17,5 +17,9 @@ runs:
     - name: "Copy Task Binary"
       shell: "sh"
       run:  |
+        whoami
+        pwd
         env
+        echo "ACTION PATH CONTENTS:"
+        ls -laR "${GITHUB_ACTION_PATH}"
         tar -x -C /usr/local/bin --no-same-owner -f "${GITHUB_ACTION_PATH}/task_linux_amd64.tar.gz" task
