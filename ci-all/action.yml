@@ -1,0 +1,14 @@
+name: "CI All"
+inputs: {}
+runs:
+  using: "composite"
+  steps:
+    - name: "Check Jobs"
+      shell: "sh"
+      run: |
+        results=$(grep '"result":' <<<'${{ toJson(needs) }}')
+        if echo "$results" | grep -q "failure\|cancelled\|skipped"; then
+          echo "One or more jobs failed, were cancelled, or were skipped" >&2
+          exit 1
+        fi
+        echo "All jobs passed"
