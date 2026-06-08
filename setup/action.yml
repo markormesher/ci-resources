@@ -4,7 +4,7 @@ runs:
   using: "composite"
   steps:
     - name: "Checkout"
-      shell: "sh"
+      shell: "bash"
       env:
         SERVER: "${{ github.server_url }}"
       run: |
@@ -16,6 +16,6 @@ runs:
         git -c advice.detachedHead=false checkout ${{ github.sha }}
 
     - name: "Copy Task Binary"
-      shell: "sh"
+      shell: "bash"
       run:  |
         tar -x --no-same-owner -f "${GITHUB_ACTION_PATH}/task_linux_amd64.tar.gz" task

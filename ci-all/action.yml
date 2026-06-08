@@ -4,11 +4,11 @@ runs:
   using: "composite"
   steps:
     - name: "Check Jobs"
-      shell: "sh"
+      shell: "bash"
       run: |
-        results=$(grep '"result":' <<<'${{ toJson(needs) }}')
-        if grep -vq success <<<"$results"; then
-          echo "One or more unsuccessful jobs" >&2
+        results=$(echo '${{ toJson(needs) }}' | (grep '"result"' || echo))
+        if echo "$results" | grep -q "failure\|cancelled\|skipped"; then
+          echo "One or more jobs failed, were cancelled, or were skipped" >&2
           exit 1
         fi
         echo "All jobs passed"
