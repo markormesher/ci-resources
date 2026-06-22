@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     if: always()
     container:
-      image: docker.io/busybox:1.37.0
+      image: docker.io/busybox:1.37.0@sha256:9532d8c39891ca2ecde4d30d7710e01fb739c87a8b9299685c63704296b16028
     steps:
       - run: |2
           results=$(echo '${{ toJson(needs) }}' | (grep '"result"' || echo))
