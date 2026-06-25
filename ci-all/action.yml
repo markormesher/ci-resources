@@ -6,8 +6,9 @@ runs:
     - name: "Check Jobs"
       shell: "bash"
       env:
-        RESULTS: "${{ toJson(needs) }}"
+        RESULTS: "${{ needs }}"
       run: |
+        env
         results=$(echo "$RESULTS" | (grep '"result"' || echo))
         if echo "$results" | grep -q "failure\|cancelled\|skipped"; then
           echo "One or more jobs failed, were cancelled, or were skipped" >&2
