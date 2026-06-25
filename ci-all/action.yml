@@ -5,8 +5,6 @@ runs:
   steps:
     - name: "Check Jobs"
       shell: "bash"
-      env:
-        RESULTS: "${{ needs }}"
       run: |
         env
         results=$(echo "$RESULTS" | (grep '"result"' || echo))
