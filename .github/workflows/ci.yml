@@ -1,0 +1,18 @@
+# This file is maintained by Tedium - manual edits will be overwritten!
+name: CI
+"on":
+  - push
+jobs:
+  ci-all:
+    runs-on: ubuntu-latest
+    if: always()
+    container:
+      image: docker.io/busybox:1.38.0@sha256:fd8d9aa63ba2f0982b5304e1ee8d3b90a210bc1ffb5314d980eb6962f1a9715d
+    steps:
+      - run: |2
+          results=$(echo '${{ toJson(needs) }}' | (grep '"result"' || echo))
+          if echo "$results" | grep -q "failure\|cancelled\|skipped"; then
+            echo "One or more jobs failed, were cancelled, or were skipped" >&2
+            exit 1
+          fi
+          echo "All jobs passed"
