@@ -3,7 +3,14 @@ inputs: {}
 runs:
   using: "composite"
   steps:
-    - name: "Checkout"
+    - name: "Check Jobs"
       shell: "bash"
+      env:
+        RESULTS: "${{ toJson(needs) }}"
       run: |
-        echo done
+        results=$(echo "$RESULTS" | (grep '"result"' || echo))
+        if echo "$results" | grep -q "failure\|cancelled\|skipped"; then
+          echo "One or more jobs failed, were cancelled, or were skipped" >&2
+          exit 1
+        fi
+        echo "All jobs passed"
