@@ -1,5 +1,6 @@
 # This file is maintained by Tedium - manual edits will be overwritten!
 
+---
 version: "3"
 includes:
   local:
